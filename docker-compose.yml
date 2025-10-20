@@ -1,0 +1,59 @@
+######################### NETWORKS
+networks:
+  homenet:
+    name: homenet
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 192.168.10.0/24
+  default:
+    driver: bridge
+
+include:
+  ########################### SERVICES
+
+  # CORE
+  - compose/portainer.yml
+  # DATABASES
+  - compose/mariadb.yml
+  - compose/redis.yml
+  # FRONTEND
+  - compose/homer.yml
+  - compose/openwebui.yml
+  - compose/phpmyadmin.yml
+  - compose/rediscommander.yml
+  # MEDIA
+  - compose/audiobookshelf.yml
+  - compose/freshrss.yml
+  - compose/photoprism.yml
+  - compose/plexms.yml
+  # DOWNLOADERS
+  - compose/qbittorrent.yml
+  - compose/libation.yml
+  # PVRS
+  - compose/lidarr.yml
+  - compose/radarr.yml
+  - compose/raudio.yml
+  - compose/rebook.yml
+  - compose/sonarr.yml
+  # COMPLEMENTARY APPS
+  - compose/bazarr.yml
+  - compose/flaresolverr.yml
+  - compose/jackett.yml
+  - compose/prowlarr.yml
+  # GAMES
+  - compose/skyblock.yml
+  # MONITORING
+  - compose/dozzle.yml
+  - compose/grafana.yml
+  - compose/node_exporter.yml
+  - compose/prometheus.yml
+  # NETWORK
+  - compose/gluetun.yml
+  - compose/gluetun-arr.yml
+  # UTILITIES
+  - compose/handbrake.yml
+  - compose/mkvtoolnix.yml
+  - compose/ollama.yml
+  - compose/searxng.yml
+  - compose/stirlingpdf.yml

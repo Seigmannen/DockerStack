@@ -1,0 +1,17 @@
+services:
+  portainer:
+    container_name: portainer
+    image: portainer/portainer-ce:latest
+    security_opt:
+      - no-new-privileges:true
+    restart: unless-stopped
+    command: -H unix:///var/run/docker.sock
+    networks:
+      - homenet
+    ports:
+      - "$PORTAINER_PORT:9000"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - $DOCKERDIR/appdata/portainer/data:/data
+    environment:
+      - TZ=$TZ

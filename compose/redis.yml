@@ -1,0 +1,16 @@
+services:
+  redis:
+    container_name: redis
+    image: redis:latest
+    security_opt:
+      - no-new-privileges:true
+    restart: unless-stopped
+    entrypoint: redis-server --appendonly yes
+    networks:
+      - homenet
+    ports:
+      - "$REDIS_PORT:6379"
+    volumes:
+      - $DOCKERDIR/appdata/redis/data:/data
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro

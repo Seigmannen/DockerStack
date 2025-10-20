@@ -1,0 +1,28 @@
+services:
+  # MariaDB - MySQL Database
+  # docker exec -it mariadb /bin/bash
+  # mysql -u root -p
+  # type root password
+  # create database db_name;
+  # CREATE USER 'db_user' IDENTIFIED BY 'db_password';
+  # GRANT ALL ON `db_name%`.* TO 'db_user';
+  # flush privileges;
+  # quit
+  # exit
+  mariadb:
+    container_name: mariadb
+    image: lscr.io/linuxserver/mariadb:latest
+    security_opt:
+      - no-new-privileges:true
+    restart: unless-stopped
+    networks:
+      - homenet
+    ports:
+      - "$MARIADB_PORT:3306"
+    volumes:
+      - $DOCKERDIR/appdata/mariadb/data:/config
+    environment:
+      - PUID=$PUID
+      - PGID=$PGID
+      - TZ=$TZ
+      - MYSQL_ROOT_PASSWORD=$MYSQL_ROOT_PASSWORD

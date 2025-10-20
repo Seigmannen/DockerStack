@@ -1,0 +1,15 @@
+services:
+  rediscommander:
+    container_name: rediscommander
+    image: rediscommander/redis-commander:latest
+    security_opt:
+      - no-new-privileges:true
+    restart: unless-stopped
+    depends_on:
+      - redis
+    networks:
+      - homenet
+    ports:
+      - "$REDISCOMMANDER_PORT:8081"
+    environment:
+      - REDIS_HOST=$SERVERIP_LOCAL

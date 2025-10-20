@@ -1,0 +1,18 @@
+services:
+  # A dead simple static HOMepage for your servER to keep your services on hand, from a simple yaml configuration file.
+  # https://github.com/bastienwirtz/homer
+  homer:
+    container_name: homer
+    image: b4bz/homer
+    security_opt:
+      - no-new-privileges:true
+    restart: unless-stopped
+    networks:
+      - homenet
+    ports:
+      - "$HOMER_PORT:8080"
+    volumes:
+      - $DOCKERDIR/appdata/homer:/www/assets
+    user: $PUID:$PGID
+    environment:
+      - INIT_ASSETS=1
