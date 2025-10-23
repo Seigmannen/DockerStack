@@ -1,0 +1,20 @@
+services:
+  freshrss:
+    container_name: freshrss
+    image: lscr.io/linuxserver/freshrss:latest
+    security_opt:
+      - no-new-privileges:true
+    restart: unless-stopped
+    depends_on:
+      - mariadb
+      - redis
+    networks:
+      - homenet
+    ports:
+      - "$FRESHRSS_PORT:80"
+    volumes:
+      - $DOCKERDIR/appdata/freshrss:/config
+    environment:
+      - PUID=$PUID
+      - PGID=$PGID
+      - TZ=$TZ
