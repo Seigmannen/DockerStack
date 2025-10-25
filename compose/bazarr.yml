@@ -1,0 +1,19 @@
+services:
+  bazarr:
+    image: lscr.io/linuxserver/bazarr:latest
+    container_name: bazarr
+    security_opt:
+      - no-new-privileges:true
+    restart: unless-stopped
+    depends_on:
+      - gluetun-arr
+    network_mode: "service:gluetun-arr"
+    volumes:
+      - $DOCKERDIR/appdata/bazarr:/config
+      - $MOVIEDIR:/movies
+      - $TVDIR:/tv
+      - "/etc/localtime:/etc/localtime:ro"
+    environment:
+      - PUID=$PUID
+      - PGID=$PGID
+      - TZ=$TZ

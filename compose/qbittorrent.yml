@@ -1,0 +1,21 @@
+services:
+  qbittorrent:
+    image: lscr.io/linuxserver/qbittorrent:latest
+    container_name: qbittorrent
+    security_opt:
+      - no-new-privileges:true
+    restart: unless-stopped
+    depends_on:
+      - gluetun
+    network_mode: "service:gluetun"
+    volumes:
+      - $DOCKERDIR/appdata/qbittorrent/config:/config
+      - $DOWNLOADDIR:/downloads
+      - $INCOMPLETE:/incomplete
+    environment:
+      - PUID=$PUID
+      - PGID=$PGID
+      - TZ=$TZ
+      - WEBUI_PORT=$QBITWEBUI_PORT
+      - TORRENTING_PORT=6881
+      - WEBUI_BYPASS_LOCAL_AUTH=true

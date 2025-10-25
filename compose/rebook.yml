@@ -1,0 +1,19 @@
+services:
+  rebook:
+    image: ghcr.io/hotio/readarr:nightly
+    container_name: rebook
+    security_opt:
+      - no-new-privileges:true
+    restart: unless-stopped
+    depends_on:
+      - gluetun-arr
+    network_mode: "service:gluetun-arr"
+    volumes:
+      - $DOCKERDIR/appdata/rebook:/config
+      - $DOWNLOADDIR:/downloads
+      - $DOWNLOADDIR:/data/completed
+      - $EBOOKDIR:/ReadarreBooks
+    environment:
+      - PUID=$PUID
+      - PGID=$PGID
+      - TZ=$TZ

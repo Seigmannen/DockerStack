@@ -1,0 +1,19 @@
+services:
+  raudio:
+    image: ghcr.io/hotio/readarr:nightly
+    container_name: raudio
+    security_opt:
+      - no-new-privileges:true
+    restart: unless-stopped
+    depends_on:
+      - gluetun-arr
+    network_mode: "service:gluetun-arr"
+    volumes:
+      - $DOCKERDIR/appdata/raudio:/config
+      - $DOWNLOADDIR:/downloads
+      - $DOWNLOADDIR:/data/completed
+      - $AUDIOBOOKDIR:/audiobooks
+    environment:
+      - PUID=$PUID
+      - PGID=$PGID
+      - TZ=$TZ

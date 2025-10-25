@@ -1,0 +1,37 @@
+services:
+  plexms:
+    image: plexinc/pms-docker:latest
+    container_name: plexms
+    security_opt:
+      - no-new-privileges:true
+    restart: unless-stopped
+    networks:
+      - homenet
+    ports:
+      - "$PLEX_PORT1:32400/tcp"
+      - "$PLEX_PORT2:3005/tcp"
+      - "$PLEX_PORT3:8324/tcp"
+      - "$PLEX_PORT4:32469/tcp"
+      - "$PLEX_PORT5:1900/udp"
+      - "$PLEX_PORT6:32410/udp"
+      - "$PLEX_PORT7:32412/udp"
+      - "$PLEX_PORT8:32413/udp"
+      - "$PLEX_PORT9:32414/udp"
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
+    volumes:
+      - $DOCKERDIR/appdata/plexms:/config
+      - $MEDIADIR:/media
+      - /dev/shm:/transcode
+    environment:
+      - TZ=$TZ
+      - HOSTNAME=MediaServer
+      - PLEX_CLAIM=$PLEXCLAIM
+      - PLEX_UID=$PUID
+      - PLEX_GID=$PGID
+      - ADVERTISE_IP=http://$SERVERIP_TAILSCALE:$PLEX_PORT1/,http://$SERVERIP_LOCAL:$PLEX_PORT1/

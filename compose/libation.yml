@@ -1,0 +1,15 @@
+services:
+  libation:
+    image: rmcrackan/libation:latest
+    container_name: libation
+    security_opt:
+      - no-new-privileges:true
+    restart: unless-stopped
+    networks:
+      - homenet
+    user: "$PUID:$PGID"
+    volumes:
+      - $DOCKERDIR/appdata/libation/config:/config
+      - $AUDIBLEDIR:/data
+    environment:
+      - SLEEP_TIME=180m

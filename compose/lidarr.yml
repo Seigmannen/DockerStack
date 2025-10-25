@@ -1,0 +1,20 @@
+services:
+  lidarr:
+    image: lscr.io/linuxserver/lidarr:latest
+    container_name: lidarr
+    security_opt:
+      - no-new-privileges:true
+    restart: unless-stopped
+    depends_on:
+      - gluetun-arr
+    network_mode: "service:gluetun-arr"
+    volumes:
+      - $DOCKERDIR/appdata/lidarr:/config
+      - $DOWNLOADDIR:/downloads
+      - $DOWNLOADDIR:/data/completed
+      - $MUSICDIR:/music
+      - "/etc/localtime:/etc/localtime:ro"
+    environment:
+      - PUID=$PUID
+      - PGID=$PGID
+      - TX=$TZ
