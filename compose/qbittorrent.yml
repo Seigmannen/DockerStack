@@ -17,5 +17,5 @@ services:
       - PGID=$PGID
       - TZ=$TZ
       - WEBUI_PORT=$QBITWEBUI_PORT
-      - TORRENTING_PORT=6881
+      - TORRENTING_PORT=15001
       - WEBUI_BYPASS_LOCAL_AUTH=true
