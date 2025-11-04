@@ -1,0 +1,63 @@
+services:
+  # Minecraft Server - Basic Minecraft server
+  minecraft:
+    container_name: minecraft
+    image: itzg/minecraft-server:java21
+    restart: unless-stopped
+    networks:
+      - homenet
+    ports:
+      - "$MINECRAFT_PORT:25565"
+    volumes:
+      - $DOCKERDIR/appdata/skyblock:/data
+    environment:
+      - EULA=true
+      - OVERRIDE_SERVER_PROPERTIES=true # Change to false if server.properties should not be overwritten
+      - UID=$PUID
+      - GID=$PGID
+      - TZ=$TZ
+      - TYPE=FABRIC
+      - VERSION=1.21.10
+      # - JVM_XX_OPTS=-XX:+UseG1GC -XX:ParallelGCThreads=1 -XX:ActiveProcessorC>
+      - SERVER_NAME=Minecraft
+      - DIFFICULTY=hard
+#      - WHITELIST=
+      # - OPS=
+      - MAX_PLAYERS=20
+      - MAX_WORLD_SIZE=10000000
+      - ALLOW_NETHER=true
+      - ANNOUNCE_PLAYER_ACHIEVEMENTS=true
+      - FORCE_GAMEMODE=false
+      - GENERATE_STRUCTURES=true
+      - HARDCORE=false
+      - SNOOPER_ENABLED=false
+      - MAX_BUILD_HEIGHT=320
+      - MAX_TICK_TIME=60000
+      - SPAWN_ANIMALS=true
+      - SPAWN_MONSTERS=true
+      - SPAWN_NPCS=true
+      - SPAWN_PROTECTION=0
+      - VIEW_DISTANCE=16
+      # - SEED=1785852800490497919
+      - PVP=true
+      - MOTD=Welcome
+      - LEVEL_TYPE=default
+      # - ONLINE_MODE=true false
+      - ALLOW_FLIGHT=false
+      # - PLAYER_IDLE_TIMEOUT= player-idle-timeout
+      # - BROADCAST_CONSOLE_TO_OPS= broadcast-console-to-ops
+      # - BROADCAST_RCON_TO_OPS= broadcast-rcon-to-ops
+      # - ENABLE_JMX= enable-jmx-monitoring
+      # - SYNC_CHUNK_WRITES= sync-chunk-writes
+      # - ENABLE_STATUS= enable-status
+      # - ENTITY_BROADCAST_RANGE_PERCENTAGE= entity-broadcast-range-percentage
+      # - FUNCTION_PERMISSION_LEVEL= function-permission-level
+      # - NETWORK_COMPRESSION_THRESHOLD= network-compression-threshold
+      - OP_PERMISSION_LEVEL= 4
+      # - PREVENT_PROXY_CONNECTIONS= prevent-proxy-connections
+      # - USE_NATIVE_TRANSPORT= use-native-transport
+      - ENFORCE_WHITELIST
+      - MEMORY=4G
+      - INIT_MEMORY=512M
+      - MAX_MEMORY=4G
+      - ENABLE_COMMAND_BLOCK=false

@@ -1,0 +1,13 @@
+global:
+  scrape_interval: 15s
+  evaluation_interval: 15s
+  external_labels:
+    cluster: homelab
+
+scrape_configs:
+  - job_name: node
+    static_configs:
+      - targets: ["host.docker.internal:9100"]  # using this because node_exporter is running in host network mode
+    relabel_configs:
+      - target_label: instance
+        replacement: "node_exporter:9100"

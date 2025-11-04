@@ -1,0 +1,19 @@
+services:
+  searxng:
+    image: searxng/searxng:latest
+    container_name: searxng
+    restart: unless-stopped
+    depends_on:
+      - ollama
+      - openwebui
+    networks:
+      - homenet
+    ports:
+      - "$SEARXNG_PORT:8080"
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - /etc/timezone:/etc/timezone:ro
+      - $DOCKERDIR/appdata/searxng:/etc/searxng
+    environment:
+      - PUID=$PUID
+      - PGID=$PGID

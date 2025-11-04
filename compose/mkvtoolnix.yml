@@ -1,0 +1,24 @@
+services:
+  mkvtoolnix:
+    image: jlesage/mkvtoolnix:latest
+    container_name: mkvtoolnix
+    security_opt:
+      - no-new-privileges:true
+    restart: unless-stopped
+    networks:
+      - homenet
+    ports:
+      - "$MKVTOOLNIX_PORT:5800"
+    volumes:
+      - $DOCKERDIR/appdata/mkvtoolnix/config:/config
+      - $MEDIADIR:/storage
+    environment:
+      USER_ID: $PUID
+      GROUP_ID: $PGID
+      UMASK: 002
+      TZ: $TZ
+      KEEP_APP_RUNNING: 1
+      CLEAN_TMP_DIR: 1
+      DISPLAY_WIDTH: 1600
+      DISPLAY_HEIGHT: 960
+      VNC_PASSWORD: Password

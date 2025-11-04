@@ -1,0 +1,30 @@
+services:
+  handbrake:
+    image: jlesage/handbrake:latest
+    container_name: handbrake
+    security_opt:
+      - no-new-privileges:true
+    restart: unless-stopped
+    networks:
+      - homenet
+    ports:
+      - "$HANDBRAKE_PORT:5800"
+    volumes:
+      - $DOWNLOADDIR/Downloads:/storage:ro
+      - $DOCKERDIR/appdata/handbrake/config:/config:rw
+      - $DOWNLOADDIR/Handbrake/Watched:/watch:rw
+      - $DOWNLOADDIR/Handbrake/Finished:/output:rw
+    environment:
+      USER_ID: $PUID
+      GROUP_ID: $PGID
+      UMASK: 002
+      TZ: $TZ
+      KEEP_APP_RUNNING: 1
+      CLEAN_TMP_DIR: 1
+      DISPLAY_WIDTH: 1600
+      DISPLAY_HEIGHT: 960
+      AUTOMATED_CONVERSION_KEEP_SOURCE: 1
+      AUTOMATED_CONVERSION_PRESET: "General/Fast 1080p30"
+      AUTOMATED_CONVERSION_FORMAT: "mp4"
+      AUTOMATED_CONVERSION_NO_GUI_PROGRESS: 1
+      VNC_PASSWORD: Password

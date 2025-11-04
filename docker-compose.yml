@@ -42,7 +42,7 @@ include:
   - compose/jackett.yml
   - compose/prowlarr.yml
   # GAMES
-  - compose/skyblock.yml
+  - compose/minecraft.yml
   # MONITORING
   - compose/dozzle.yml
   - compose/grafana.yml

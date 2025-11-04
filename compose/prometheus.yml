@@ -1,0 +1,19 @@
+services:
+  prometheus:
+    container_name: prometheus
+    image: prom/prometheus
+    security_opt:
+      - no-new-privileges:true
+    restart: unless-stopped
+    user: "$PUID:$PGID"
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    networks:
+      - homenet
+    ports:
+      - "$PROMETHEUS_PORT:9090"
+    volumes:
+      - $DOCKERDIR/appdata/prometheus/config:/etc/prometheus
+      - $DOCKERDIR/appdata/prometheus/data:/prometheus

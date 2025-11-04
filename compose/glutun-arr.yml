@@ -1,0 +1,27 @@
+services:
+  gluetun-arr:
+    image: qmcgaw/gluetun
+    container_name: gluetun-arr
+    security_opt:
+      - no-new-privileges:true
+    restart: unless-stopped
+    cap_add:
+      - NET_ADMIN
+    networks:
+      homenet:
+        ipv4_address: $GLUETUN_ARR_HOST
+    ports:
+      - "$BAZARR_PORT:6767"
+      - "$JACKETT_PORT:9117"
+      - "$LIDARR_PORT:8686"
+      - "$PROWLARR_PORT:9696"
+      - "$RADARR_PORT:7878"
+      - "$RAUDIO_PORT:8787"
+      - "$REBOOK_PORT:8888"
+      - "$SONARR_PORT:8989"
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - $DOCKERDIR/appdata/gluetun-arr/wg0.conf:/gluetun/wireguard/wg0.conf
+    environment:
+      - VPN_SERVICE_PROVIDER=custom
+      - VPN_TYPE=wireguard

@@ -1,0 +1,20 @@
+services:
+  node_exporter:
+    image: quay.io/prometheus/node-exporter:latest
+    container_name: node_exporter
+    restart: unless-stopped
+    network_mode: host
+    # ports:
+    #   - 9100:9100
+    security_opt:
+      - no-new-privileges:true
+    command:
+      - '--path.rootfs=/host'
+      - '--path.procfs=/host/proc'
+      - '--path.sysfs=/host/sys'
+      - '--collector.cpu.info'
+    pid: host
+    volumes:
+      - '/:/host:ro,rslave'
+    environment:
+      - TZ=$TZ
